@@ -1,0 +1,48 @@
+ESTIMATE of time to complete assignment: 40 hours
+
+      Time     Time
+Date  Started  Spent Work completed
+----  -------  ----  --------------
+2/15  10:30pm  1:00  started reading spec and Raft paper sections 1 and 5
+2/16  10:00am  2:00  finished skimming Raft paper, Student's Guide to Raft, started looking at source code
+2/18  6:50pm   0:15  continued reading spec
+2/19  10:10am  2:10  finished reading spec, locking/structure advice, Raft quiz, etc; compiled notes for part A
+2/19  5:20pm   0:40  started writing part A
+2/19  7:25pm   2:05  wrote goro for heartbeat and election timeouts
+2/19  11:20pm  1:00  rewrote goros for heartbeat and election timeouts
+2/20  11:20pm  1:05  figured out RPC calls; started writing election code
+2/21  10:05am  2:35  finished writing part A; figured out what I have questions on
+2/22  4:00pm   0:15  tried to attend office hours; thought about what should happen if an RPC returns false  
+2/23  12:45pm  1:30  debugging part A
+2/23  10:35pm  1:45  finished debugging part A (now passing all part A tests); started part B (updating structs and RequestVote RPC)
+2/24  10:35am  2:30  part B started AppendEntries RPC
+2/27  8:00pm   2:35  part B finishing AppendEntries RPC; setting up long-running goro to send ApplyMsgs to applyCh; 
+                        checking existing code against Student's Guide to Raft
+2/28  11:30am  0:30  part B started on nextIndex and matchIndex updates
+2/28  9:50pm   2:00  part B finished writing; started debugging (implemented debugging log categories)
+3/1   7:45pm   3:00  part B debugging
+3/2   1:30pm   0:50  part B debugging (office hours with Mahdi - deadlock)
+3/3   9:40am   2:00  part B debugging (office hours with Mahdi - appendEntries logic)
+3/4   11:00am  2:00  part B debugging (fixing appendEntries logic)
+3/4   2:00pm   2:00  part B debugging (organizing code; fixing appendEntries logic / condensed heartbeat/update into just heartbeat)
+3/4   7:30pm   3:00  part B debugging (resetting election timeout in correct places; turning off logs)
+3/5   11:30am  0:35  writing part C persist() and readPersist()
+3/5   2:00pm   3:00  debugging part C
+3/6   7:00pm   4:00  debugging part C (Xiao OHs; fixing a deadlock and also rewriting sendCommittedLogs to no longer use a condition
+                        variable; running tests a few times, now usually passing all tests)
+3/7   10:00pm  1:00  writing discussion question answers
+3/8   1:00pm   1:30  Mahdi OHs - trying to find bug in TestFigure8Unreliable3C
+3/8   11:00pm  2:00  writing unit tests
+3/9   10:50am  0:25  writing time.log
+               ----
+               49:15 TOTAL time spent
+
+I discussed my solution with: no other students (Xiao, Mahdi, Ross office hours)
+
+major conceptual and coding difficulties that you encountered in developing and debugging the program:
+- reading EVERYTHING at the start for a full understanding was maybe not the best idea; difficult to hold it all in my head at once and I couldn't really understand some parts until I implemented them. Maybe what I should have done was skim everything at the start for a general understanding, then skim everything again to understand what is relevant for part A, then implemented part A, and repeated the second two steps for B and C.
+- implementing all of part A at once, then running all the tests, then all of part B, etc was not a great idea either. I probably should have gone a few tests at a time - implementing what was needed for TestInitialElection3A, then making sure the test passed, and then iterating with future tests. Implementing all of part B at once was especially not a good idea as it caused me to start failing some part A tests I was previously passing, and it was a huge headache to figure out what part of the large amount of code I added was causing the problem.
+- learned adding printlogs as checkpoints in the tests is very helpful to understand exactly where your code is failing.
+- difficulties I had with part A: understanding locking conceptually / the idea of critical sections, figuring out how candidate ids are stored/used, wrote one long-running goroutine to take care of both heartbeat and election timeouts before realizing the MIT advice page advises to split these up into separate long-running goros, thinking through what should happen if an RPC fails
+- difficulties with part B: learned about Go's condition variables in order to kick the goroutine that applies log entries, techniques for debugging deadlocks (printing all locks and unlocks)
+- difficulties with part C: persisting was not necessarily very difficult to implement, but figuring out why 3C tests were failing was quite difficult and time intensive as there are a lot of logs to sort through from previous parts and the tests take a while to run and don't even fail every time. Thinking through fast log backtracking didn't take too long but was a little difficult conceptually to understand each of the different cases.

@@ -1,0 +1,38 @@
+Misc:
+Figure out version control
+
+Reading:
+Skim Raft paper sections 1, 2, 5, 8
+Read the lab spec in its entirety
+
+Skim every source code file
+Close read Raft paper section 5 / figure 2
+Student's Guide to Raft
+Raft locking and structure advice
+Raft website visualization
+Debugging guidance and effective print statements
+Diagram of Raft interactions
+Raft quiz
+
+Planning:
+Think about the overall structure of your program and plan where different functionality would fit.
+
+Implementation:
+Finish implementing Part A (and pass all unit tests for Part A).
+
+
+TODO PART A:
+- when to lock
+- candidate id
+- what if RPC returns false
+
+
+
+Candidate ID
+- Places where it can be stored as an index into peers[] array:
+
+- Places where it cannot be stored ":
+    RequestVoteArgs struct
+    RequestVote RPC handler
+    AppendEntriesArgs struct
+    AppendEntries RPC handler
